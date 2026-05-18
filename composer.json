@@ -1,0 +1,26 @@
+{
+    "name": "robertboes/filament-passkeys",
+    "description": "Filament plugin that integrates Laravel's official passkeys package into the panel login and profile.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "filament/filament": "^5.0",
+        "laravel/passkeys": "^0.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RobertBoes\\FilamentPasskeys\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RobertBoes\\FilamentPasskeys\\FilamentPasskeysServiceProvider"
+            ]
+        }
+    }
+}
