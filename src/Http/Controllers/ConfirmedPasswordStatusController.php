@@ -7,6 +7,7 @@ namespace RobertBoes\FilamentPasskeys\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Date;
 
 class ConfirmedPasswordStatusController extends Controller
@@ -18,10 +19,10 @@ class ConfirmedPasswordStatusController extends Controller
 
         $elapsed = Date::now()->unix() - $lastConfirmation;
 
-        $defaultTimeout = config('auth.password_timeout', 10800);
-        $defaultTimeout = is_numeric($defaultTimeout) ? (int) $defaultTimeout : 10800;
-
-        $timeout = $request->integer('seconds', $defaultTimeout);
+        $timeout = $request->integer(
+            'seconds',
+            Config::integer('auth.password_timeout', 10800),
+        );
 
         return response()->json([
             'confirmed' => $elapsed < $timeout,
