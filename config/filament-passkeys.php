@@ -14,18 +14,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Client script source
-    |--------------------------------------------------------------------------
-    |
-    | The plugin loads the @laravel/passkeys client from a CDN by default so it
-    | works without a bundler. If you bundle the package yourself, set this to
-    | null and expose `window.Passkeys` from your app's JS.
-    |
-    */
-    'client_script_src' => 'https://esm.sh/@laravel/passkeys@latest',
-
-    /*
-    |--------------------------------------------------------------------------
     | Labels
     |--------------------------------------------------------------------------
     */

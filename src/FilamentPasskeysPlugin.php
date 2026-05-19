@@ -103,7 +103,6 @@ class FilamentPasskeysPlugin implements Plugin
                 $hook,
                 fn (): string => view('filament-passkeys::login-button', [
                     'label' => $this->getLoginButtonLabel(),
-                    'scriptSrc' => config('filament-passkeys.client_script_src'),
                 ])->render(),
             );
         }
