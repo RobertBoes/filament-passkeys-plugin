@@ -4,6 +4,7 @@ namespace RobertBoes\FilamentPasskeys;
 
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
+use RobertBoes\FilamentPasskeys\Commands\InstallCommand;
 use RobertBoes\FilamentPasskeys\Http\Responses\FilamentPasskeyLoginResponse;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passkeys\Contracts\PasskeyLoginResponse;
@@ -37,5 +38,11 @@ class FilamentPasskeysServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/filament-passkeys'),
         ], 'filament-passkeys-views');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallCommand::class,
+            ]);
+        }
     }
 }
