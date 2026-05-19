@@ -12,10 +12,10 @@ class FilamentPasskeyLoginResponse implements PasskeyLoginResponseContract
 {
     public function toResponse($request): JsonResponse
     {
-        $panel = Filament::getCurrentPanel() ?? Filament::getDefaultPanel();
+        $panel = Filament::getCurrentOrDefaultPanel();
 
         return new JsonResponse([
-            'redirect' => $panel->getUrl() ?? config('app.url'),
+            'redirect' => $panel?->getUrl() ?? config('app.url'),
         ]);
     }
 }

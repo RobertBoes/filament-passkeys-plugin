@@ -6,7 +6,7 @@
     $blockGap = 'calc(var(--spacing) * 6)';
     $itemGap = 'calc(var(--spacing) * 2)';
 
-    $panelId = filament()->getCurrentPanel()->getId();
+    $panelId = filament()->getCurrentOrDefaultPanel()->getId();
     $confirmPasswordUrl = route("filament.{$panelId}.filament-passkeys.confirm-password.store");
     $confirmPasswordStatusUrl = route("filament.{$panelId}.filament-passkeys.confirm-password.status");
     $deletePasskeyBaseUrl = url('/user/passkeys');
