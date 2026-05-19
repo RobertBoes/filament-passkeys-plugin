@@ -4,7 +4,6 @@ namespace RobertBoes\FilamentPasskeys;
 
 use Filament\Actions\Action;
 use Filament\Contracts\Plugin;
-use Filament\Facades\Filament;
 use Filament\Panel;
 use RobertBoes\FilamentPasskeys\Filament\Pages\ManagePasskeys;
 
@@ -110,9 +109,11 @@ class FilamentPasskeysPlugin implements Plugin
         }
 
         if ($this->registerManagePage) {
-            $panel->pages([
-                ManagePasskeys::class,
-            ]);
+            $panel
+                ->authenticatedRoutes(fn (Panel $panel) => ManagePasskeys::registerRoutes($panel))
+                ->livewireComponents([
+                    ManagePasskeys::class,
+                ]);
         }
 
         if ($this->registerManagePage && $this->registerUserMenuItem) {
@@ -120,7 +121,6 @@ class FilamentPasskeysPlugin implements Plugin
                 Action::make('passkeys')
                     ->label($this->getUserMenuItemLabel())
                     ->icon('heroicon-o-key')
-                    ->visible(fn (): bool => ! $panel->hasTenancy() || filled(Filament::getTenant()))
                     ->url(fn (): string => ManagePasskeys::getUrl()),
             ]);
         }
