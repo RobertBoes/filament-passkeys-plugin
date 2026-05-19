@@ -1,0 +1,19 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 9
+    paths:
+        - src
+    ignoreErrors:
+        # Larastan cannot verify our namespaced views without booting the
+        # consuming Laravel app, so it treats valid view names as untyped
+        # strings. Tracked as known false positives.
+        -
+            identifier: argument.type
+            message: '#expects view-string, string given\.$#'
+            path: src/FilamentPasskeysPlugin.php
+        -
+            identifier: argument.type
+            message: '#expects view-string\|null, string given\.$#'
+            path: src/FilamentPasskeysPlugin.php

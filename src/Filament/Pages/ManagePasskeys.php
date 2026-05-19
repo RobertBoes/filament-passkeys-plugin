@@ -8,6 +8,7 @@ use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passkeys\Contracts\PasskeyUser;
 
 class ManagePasskeys extends Page
 {
@@ -50,7 +51,7 @@ class ManagePasskeys extends Page
         $user = filament()->auth()->user();
 
         return [
-            'passkeys' => method_exists($user, 'passkeys')
+            'passkeys' => $user instanceof PasskeyUser
                 ? $user->passkeys()->latest()->get()
                 : collect(),
         ];

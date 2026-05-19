@@ -13,14 +13,15 @@ class ConfirmedPasswordStatusController extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
-        $lastConfirmation = (int) $request->session()->get('auth.password_confirmed_at', 0);
+        $lastConfirmation = $request->session()->get('auth.password_confirmed_at', 0);
+        $lastConfirmation = is_numeric($lastConfirmation) ? (int) $lastConfirmation : 0;
 
         $elapsed = Date::now()->unix() - $lastConfirmation;
 
-        $timeout = (int) $request->input(
-            'seconds',
-            config('auth.password_timeout', 10800),
-        );
+        $defaultTimeout = config('auth.password_timeout', 10800);
+        $defaultTimeout = is_numeric($defaultTimeout) ? (int) $defaultTimeout : 10800;
+
+        $timeout = $request->integer('seconds', $defaultTimeout);
 
         return response()->json([
             'confirmed' => $elapsed < $timeout,

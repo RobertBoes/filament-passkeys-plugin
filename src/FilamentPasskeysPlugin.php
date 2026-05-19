@@ -12,7 +12,9 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passkeys\Contracts\PasskeyUser;
 use RobertBoes\FilamentPasskeys\Filament\Pages\ManagePasskeys;
 use RobertBoes\FilamentPasskeys\Http\Controllers\ConfirmPasswordController;
 use RobertBoes\FilamentPasskeys\Http\Controllers\ConfirmedPasswordStatusController;
@@ -40,13 +42,16 @@ class FilamentPasskeysPlugin implements Plugin
 
     public static function make(): static
     {
-        return app(static::class);
+        /** @var static $instance */
+        $instance = app(static::class);
+
+        return $instance;
     }
 
     public static function get(): static
     {
         /** @var static $plugin */
-        $plugin = filament(app(static::class)->getId());
+        $plugin = filament(static::make()->getId());
 
         return $plugin;
     }
@@ -130,11 +135,14 @@ class FilamentPasskeysPlugin implements Plugin
             ]);
     }
 
+    /**
+     * @return \Illuminate\Support\Collection<int, \Laravel\Passkeys\Passkey>
+     */
     protected static function resolveCurrentUserPasskeys(): \Illuminate\Support\Collection
     {
         $user = Filament::auth()->user();
 
-        return method_exists($user, 'passkeys')
+        return $user instanceof PasskeyUser
             ? $user->passkeys()->latest()->get()
             : collect();
     }
@@ -149,22 +157,22 @@ class FilamentPasskeysPlugin implements Plugin
     public function getLoginButtonLabel(): string
     {
         return $this->loginButtonLabel
-            ?? config('filament-passkeys.login_button_label')
-            ?? __('filament-passkeys::passkeys.login.button');
+            ?: Config::string('filament-passkeys.login_button_label', '')
+            ?: __('filament-passkeys::passkeys.login.button');
     }
 
     public function getUserMenuItemLabel(): string
     {
         return $this->userMenuItemLabel
-            ?? config('filament-passkeys.user_menu_item_label')
-            ?? __('filament-passkeys::passkeys.menu.label');
+            ?: Config::string('filament-passkeys.user_menu_item_label', '')
+            ?: __('filament-passkeys::passkeys.menu.label');
     }
 
     public function register(Panel $panel): void
     {
         if ($this->registerLoginButton) {
             $hook = $this->loginRenderHook
-                ?? config('filament-passkeys.login_render_hook');
+                ?? Config::string('filament-passkeys.login_render_hook');
 
             $panel->renderHook(
                 $hook,
@@ -211,6 +219,10 @@ class FilamentPasskeysPlugin implements Plugin
         }
 
         $profilePage = $panel->getProfilePage();
+
+        if ($profilePage === null) {
+            return;
+        }
 
         $renderSection = fn (): string => view('filament-passkeys::passkey-section', [
             'passkeys' => static::resolveCurrentUserPasskeys(),
