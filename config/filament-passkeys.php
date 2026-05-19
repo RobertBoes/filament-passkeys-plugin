@@ -14,21 +14,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Client script source
+    | Label overrides
     |--------------------------------------------------------------------------
     |
-    | The plugin loads the @laravel/passkeys client from a CDN by default so it
-    | works without a bundler. If you bundle the package yourself, set this to
-    | null and expose `window.Passkeys` from your app's JS.
+    | These let you override the default labels without publishing the
+    | translation file. Leave null to use the published translations.
     |
     */
-    'client_script_src' => 'https://esm.sh/@laravel/passkeys@latest',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Labels
-    |--------------------------------------------------------------------------
-    */
-    'login_button_label' => 'Sign in with passkey',
-    'user_menu_item_label' => 'Passkeys',
+    'login_button_label' => null,
+    'user_menu_item_label' => null,
 ];

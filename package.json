@@ -1,0 +1,15 @@
+{
+    "name": "filament-passkeys",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch"
+    },
+    "dependencies": {
+        "@laravel/passkeys": "^0.2.0"
+    },
+    "devDependencies": {
+        "vite": "^6.0.0"
+    }
+}
