@@ -72,7 +72,7 @@ class TestUser extends Authenticatable
 
     public static function makeAuthenticated(string $password = 'password'): self
     {
-        $user = new self;
+        $user = new self();
         $user->id = 1;
         $user->email = 'user@example.com';
         $user->password = Hash::make($password);
