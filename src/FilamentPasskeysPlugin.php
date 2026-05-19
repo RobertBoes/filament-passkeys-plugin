@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passkeys\Contracts\PasskeyUser;
@@ -136,15 +137,15 @@ class FilamentPasskeysPlugin implements Plugin
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \Laravel\Passkeys\Passkey>
+     * @return Collection<int, \Laravel\Passkeys\Passkey>
      */
-    protected static function resolveCurrentUserPasskeys(): \Illuminate\Support\Collection
+    protected static function resolveCurrentUserPasskeys(): Collection
     {
         $user = Filament::auth()->user();
 
         return $user instanceof PasskeyUser
             ? $user->passkeys()->latest()->get()
-            : collect();
+            : new Collection();
     }
 
     public function userMenuItemLabel(string $label): static
