@@ -14,9 +14,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Labels
+    | Label overrides
     |--------------------------------------------------------------------------
+    |
+    | These let you override the default labels without publishing the
+    | translation file. Leave null to use the published translations.
+    |
     */
-    'login_button_label' => 'Sign in with passkey',
-    'user_menu_item_label' => 'Passkeys',
+    'login_button_label' => null,
+    'user_menu_item_label' => null,
 ];

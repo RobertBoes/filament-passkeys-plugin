@@ -19,7 +19,7 @@
         ->map(fn ($passkey) => [
             'id' => $passkey->getKey(),
             'name' => $passkey->name,
-            'addedLabel' => __('Added :date', ['date' => $passkey->created_at?->diffForHumans()]),
+            'addedLabel' => __('filament-passkeys::passkeys.list.added', ['date' => $passkey->created_at?->diffForHumans()]),
         ])
         ->values()
         ->all();
@@ -33,27 +33,27 @@
         deletePasskeyBaseUrl: @js($deletePasskeyBaseUrl),
         csrfToken: @js(csrf_token()),
         labels: {
-            adding: @js(__('Adding…')),
-            add: @js(__('Add passkey')),
-            added: @js(__('Passkey added.')),
-            exists: @js(__('That device already has a passkey for this account.')),
-            failure: @js(__('Could not add passkey.')),
-            notSupported: @js(__('Your browser does not support passkeys. Try a recent version of Chrome, Safari, Edge, or Firefox.')),
-            notSupportedHeading: @js(__('Passkeys not supported')),
-            invalidDomain: @js(__('Passkeys cannot be used on this domain. Make sure you are on the same origin as the app.')),
-            confirmHeading: @js(__('Confirm your password')),
-            confirmDescription: @js(__('For your security, please confirm your password to continue.')),
-            passwordLabel: @js(__('Password')),
-            confirmAction: @js(__('Confirm')),
-            cancel: @js(__('Cancel')),
-            invalidPassword: @js(__('The password is incorrect.')),
-            networkError: @js(__('Could not verify password. Please try again.')),
-            removeHeading: @js(__('Remove passkey?')),
-            removeDescription: @js(__('You will no longer be able to sign in with this passkey.')),
-            removeAction: @js(__('Remove')),
-            removeFailure: @js(__('Could not remove passkey.')),
-            removed: @js(__('Passkey removed.')),
-            addedJustNow: @js(__('Added just now')),
+            adding: @js(__('filament-passkeys::passkeys.form.adding')),
+            add: @js(__('filament-passkeys::passkeys.form.submit')),
+            added: @js(__('filament-passkeys::passkeys.form.success')),
+            exists: @js(__('filament-passkeys::passkeys.errors.exists')),
+            failure: @js(__('filament-passkeys::passkeys.errors.add_failure')),
+            notSupported: @js(__('filament-passkeys::passkeys.errors.not_supported')),
+            notSupportedHeading: @js(__('filament-passkeys::passkeys.errors.not_supported_heading')),
+            invalidDomain: @js(__('filament-passkeys::passkeys.errors.invalid_domain')),
+            confirmHeading: @js(__('filament-passkeys::passkeys.password_confirm.heading')),
+            confirmDescription: @js(__('filament-passkeys::passkeys.password_confirm.description')),
+            passwordLabel: @js(__('filament-passkeys::passkeys.password_confirm.label')),
+            confirmAction: @js(__('filament-passkeys::passkeys.password_confirm.submit')),
+            cancel: @js(__('filament-passkeys::passkeys.password_confirm.cancel')),
+            invalidPassword: @js(__('filament-passkeys::passkeys.password_confirm.invalid')),
+            networkError: @js(__('filament-passkeys::passkeys.password_confirm.network_error')),
+            removeHeading: @js(__('filament-passkeys::passkeys.remove.heading')),
+            removeDescription: @js(__('filament-passkeys::passkeys.remove.description')),
+            removeAction: @js(__('filament-passkeys::passkeys.remove.button')),
+            removeFailure: @js(__('filament-passkeys::passkeys.remove.failure')),
+            removed: @js(__('filament-passkeys::passkeys.remove.success')),
+            addedJustNow: @js(__('filament-passkeys::passkeys.list.just_now')),
         },
     })"
     class="fi-filament-passkeys-manager"
@@ -81,7 +81,7 @@
                         outlined
                         x-on:click="confirmDelete(passkey)"
                     >
-                        {{ __('Remove') }}
+                        {{ __('filament-passkeys::passkeys.remove.button') }}
                     </x-filament::button>
                 </li>
             </template>
@@ -90,8 +90,8 @@
 
     <template x-if="passkeys.length === 0">
         <x-filament::empty-state
-            :heading="__('No passkeys yet')"
-            :description="__('Add one below to sign in without a password.')"
+            :heading="__('filament-passkeys::passkeys.empty.heading')"
+            :description="__('filament-passkeys::passkeys.empty.description')"
             icon="heroicon-o-key"
             compact
         />
@@ -111,7 +111,7 @@
 
     <div x-show="supported" style="display: flex; flex-direction: column; gap: {{ $itemGap }};">
         <label for="passkey-name" class="fi-fo-field-label">
-            {{ __('Add a new passkey') }}
+            {{ __('filament-passkeys::passkeys.form.label') }}
         </label>
 
         <div style="display: flex; gap: {{ $itemGap }};">
@@ -122,7 +122,7 @@
                         type="text"
                         x-model="name"
                         x-bind:disabled="loading || !supported"
-                        :placeholder="__('e.g. MacBook Touch ID')"
+                        :placeholder="__('filament-passkeys::passkeys.form.name_placeholder')"
                     />
                 </x-filament::input.wrapper>
             </div>

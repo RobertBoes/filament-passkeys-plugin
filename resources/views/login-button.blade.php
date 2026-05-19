@@ -1,19 +1,20 @@
 @props([
-    'label' => 'Sign in with passkey',
+    'label' => null,
 ])
 
 @php
     $blockGap = 'calc(var(--spacing) * 6)';
     $itemGap = 'calc(var(--spacing) * 2)';
-    $orLabel = __('or');
+    $label ??= __('filament-passkeys::passkeys.login.button');
+    $orLabel = __('filament-passkeys::passkeys.login.or');
 @endphp
 
 <div
     x-data="filamentPasskeysLogin({
         labels: {
-            signingIn: @js(__('Signing in…')),
+            signingIn: @js(__('filament-passkeys::passkeys.login.signing_in')),
             signIn: @js($label),
-            failure: @js(__('Passkey sign in failed.')),
+            failure: @js(__('filament-passkeys::passkeys.login.failure')),
         },
     })"
     x-cloak

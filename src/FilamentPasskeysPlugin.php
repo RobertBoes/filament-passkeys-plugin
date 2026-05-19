@@ -114,8 +114,8 @@ class FilamentPasskeysPlugin implements Plugin
     public static function passkeysSection(): Section
     {
         return Section::make('passkeys')
-            ->label(__('Passkeys'))
-            ->description(__('Sign in without a password using your device biometrics or a security key.'))
+            ->label(__('filament-passkeys::passkeys.section.heading'))
+            ->description(__('filament-passkeys::passkeys.section.description'))
             ->icon('heroicon-o-key')
             ->compact()
             ->divided()
@@ -147,13 +147,15 @@ class FilamentPasskeysPlugin implements Plugin
     public function getLoginButtonLabel(): string
     {
         return $this->loginButtonLabel
-            ?? config('filament-passkeys.login_button_label', 'Sign in with passkey');
+            ?? config('filament-passkeys.login_button_label')
+            ?? __('filament-passkeys::passkeys.login.button');
     }
 
     public function getUserMenuItemLabel(): string
     {
         return $this->userMenuItemLabel
-            ?? config('filament-passkeys.user_menu_item_label', 'Passkeys');
+            ?? config('filament-passkeys.user_menu_item_label')
+            ?? __('filament-passkeys::passkeys.menu.label');
     }
 
     public function register(Panel $panel): void
