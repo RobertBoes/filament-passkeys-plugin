@@ -5,7 +5,10 @@ namespace RobertBoes\FilamentPasskeys;
 use Filament\Actions\Action;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Illuminate\Support\Facades\Route;
 use RobertBoes\FilamentPasskeys\Filament\Pages\ManagePasskeys;
+use RobertBoes\FilamentPasskeys\Http\Controllers\ConfirmPasswordController;
+use RobertBoes\FilamentPasskeys\Http\Controllers\ConfirmedPasswordStatusController;
 
 class FilamentPasskeysPlugin implements Plugin
 {
@@ -106,6 +109,14 @@ class FilamentPasskeysPlugin implements Plugin
                 ])->render(),
             );
         }
+
+        $panel->authenticatedRoutes(function (Panel $panel): void {
+            Route::post('filament-passkeys/confirm-password', ConfirmPasswordController::class)
+                ->name('filament-passkeys.confirm-password.store');
+
+            Route::get('filament-passkeys/confirm-password/status', ConfirmedPasswordStatusController::class)
+                ->name('filament-passkeys.confirm-password.status');
+        });
 
         if ($this->registerManagePage) {
             $panel
