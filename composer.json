@@ -9,11 +9,26 @@
         "laravel/passkeys": "^0.2"
     },
     "require-dev": {
-        "orchestra/testbench": "^9.0|^10.0|^11.0"
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0"
     },
     "autoload": {
         "psr-4": {
             "RobertBoes\\FilamentPasskeys\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RobertBoes\\FilamentPasskeys\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     },
     "extra": {
@@ -22,5 +37,7 @@
                 "RobertBoes\\FilamentPasskeys\\FilamentPasskeysServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
