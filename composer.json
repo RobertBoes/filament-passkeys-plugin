@@ -25,7 +25,9 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest"
+        "test": "vendor/bin/pest",
+        "pint": "vendor/bin/pint",
+        "pint:test": "vendor/bin/pint --test"
     },
     "config": {
         "allow-plugins": {
