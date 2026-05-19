@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertBoes\FilamentPasskeys\Filament\Pages;
 
 use BackedEnum;

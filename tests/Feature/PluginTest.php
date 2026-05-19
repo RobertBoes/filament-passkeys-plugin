@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Filament\Schemas\Components\Section;
 use RobertBoes\FilamentPasskeys\FilamentPasskeysPlugin;
 
