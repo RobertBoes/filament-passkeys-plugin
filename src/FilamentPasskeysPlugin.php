@@ -3,6 +3,7 @@
 namespace RobertBoes\FilamentPasskeys;
 
 use Filament\Actions\Action;
+use Filament\Auth\Pages\Login;
 use Filament\Contracts\Plugin;
 use Filament\Facades\Filament;
 use Filament\Panel;
@@ -11,6 +12,7 @@ use Filament\Schemas\Components\View;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 use RobertBoes\FilamentPasskeys\Filament\Pages\ManagePasskeys;
 use RobertBoes\FilamentPasskeys\Http\Controllers\ConfirmPasswordController;
 use RobertBoes\FilamentPasskeys\Http\Controllers\ConfirmedPasswordStatusController;
@@ -158,6 +160,30 @@ class FilamentPasskeysPlugin implements Plugin
             ?? __('filament-passkeys::passkeys.menu.label');
     }
 
+    /**
+     * Filament renders the login form render hooks on both steps of the login
+     * page, so the button has to opt out while the user is answering the
+     * multi-factor challenge.
+     */
+    public function renderLoginButton(): string
+    {
+        if ($this->isUndertakingMultiFactorAuthentication()) {
+            return '';
+        }
+
+        return view('filament-passkeys::login-button', [
+            'label' => $this->getLoginButtonLabel(),
+        ])->render();
+    }
+
+    protected function isUndertakingMultiFactorAuthentication(): bool
+    {
+        $livewire = Livewire::current();
+
+        return $livewire instanceof Login
+            && filled($livewire->userUndertakingMultiFactorAuthentication);
+    }
+
     public function register(Panel $panel): void
     {
         if ($this->registerLoginButton) {
@@ -166,9 +192,7 @@ class FilamentPasskeysPlugin implements Plugin
 
             $panel->renderHook(
                 $hook,
-                fn (): string => view('filament-passkeys::login-button', [
-                    'label' => $this->getLoginButtonLabel(),
-                ])->render(),
+                fn (): string => $this->renderLoginButton(),
             );
         }
 
