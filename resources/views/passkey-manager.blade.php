@@ -20,6 +20,7 @@
             'id' => $passkey->getKey(),
             'name' => $passkey->name,
             'addedLabel' => __('filament-passkeys::passkeys.list.added', ['date' => $passkey->created_at?->diffForHumans()]),
+            ...\RobertBoes\FilamentPasskeys\Support\AuthenticatorIcons::for($passkey),
         ])
         ->values()
         ->all();
@@ -59,15 +60,44 @@
     class="fi-filament-passkeys-manager"
     style="display: flex; flex-direction: column; gap: {{ $blockGap }};"
 >
+    {{-- Filament toggles dark mode with a `dark` class on <html>, and the
+         plugin's views are not in the app's Tailwind build, so the icon
+         variants are switched with a scoped rule instead of dark: utilities. --}}
+    <style>
+        .fi-filament-passkeys-authenticator-icon-dark { display: none; }
+        .dark .fi-filament-passkeys-authenticator-icon-light { display: none; }
+        .dark .fi-filament-passkeys-authenticator-icon-dark { display: block; }
+    </style>
+
     <template x-if="passkeys.length > 0">
         <ul style="display: flex; flex-direction: column; gap: {{ $itemGap }}; list-style: none; padding: 0; margin: 0;">
             <template x-for="passkey in passkeys" x-bind:key="passkey.id">
                 <li style="display: flex; align-items: center; justify-content: space-between; gap: {{ $itemGap }};">
                     <div style="display: flex; align-items: center; gap: {{ $itemGap }}; min-width: 0;">
-                        <x-filament::icon
-                            icon="heroicon-o-key"
-                            class="fi-icon"
-                        />
+                        <template x-if="passkey.iconLight">
+                            <span style="display: flex; flex-shrink: 0;">
+                                <img
+                                    class="fi-filament-passkeys-authenticator-icon-light"
+                                    x-bind:src="passkey.iconLight"
+                                    x-bind:alt="passkey.authenticator ?? ''"
+                                    x-bind:title="passkey.authenticator"
+                                    style="width: calc(var(--spacing) * 5); height: calc(var(--spacing) * 5);"
+                                >
+                                <img
+                                    class="fi-filament-passkeys-authenticator-icon-dark"
+                                    x-bind:src="passkey.iconDark"
+                                    x-bind:alt="passkey.authenticator ?? ''"
+                                    x-bind:title="passkey.authenticator"
+                                    style="width: calc(var(--spacing) * 5); height: calc(var(--spacing) * 5);"
+                                >
+                            </span>
+                        </template>
+                        <template x-if="! passkey.iconLight">
+                            <x-filament::icon
+                                icon="heroicon-o-key"
+                                class="fi-icon"
+                            />
+                        </template>
                         <div style="min-width: 0;">
                             <p class="fi-fo-field-label" x-text="passkey.name"></p>
                             <p style="font-size: var(--text-xs);" x-text="passkey.addedLabel"></p>

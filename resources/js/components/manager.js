@@ -162,6 +162,9 @@ export default function filamentPasskeysManager({
                     id: result?.id,
                     name: result?.name ?? this.name,
                     addedLabel: this.labels.addedJustNow,
+                    authenticator: result?.authenticator ?? null,
+                    iconLight: result?.iconLight ?? null,
+                    iconDark: result?.iconDark ?? null,
                 });
                 this.success = this.labels.added;
                 this.name = '';

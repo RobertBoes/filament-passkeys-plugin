@@ -58,7 +58,7 @@ The JS bundle is registered as a Filament asset, so it gets published when `php 
 With the default config:
 
 - A "Sign in with passkey" button on the panel's login page. It respects the form's "Remember me" checkbox.
-- A "Passkeys" section on the profile page where users can add, name, and remove their own keys.
+- A "Passkeys" section on the profile page where users can add, name, and remove their own keys. Each key shows its authenticator's icon (Apple Passwords, 1Password, Google Password Manager, …) when `laravel/passkeys` recognises it.
 - A password confirmation modal that wraps add and remove actions, so `laravel/passkeys`'s `password.confirm` middleware can do its job without a full-page redirect.
 - A status endpoint so the modal only opens when the user actually needs to reconfirm.
 

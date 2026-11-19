@@ -8,8 +8,10 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use RobertBoes\FilamentPasskeys\Commands\InstallCommand;
 use RobertBoes\FilamentPasskeys\Http\Responses\FilamentPasskeyLoginResponse;
+use RobertBoes\FilamentPasskeys\Http\Responses\FilamentPasskeyRegistrationResponse;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passkeys\Contracts\PasskeyLoginResponse;
+use Laravel\Passkeys\Contracts\PasskeyRegistrationResponse;
 
 class FilamentPasskeysServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class FilamentPasskeysServiceProvider extends ServiceProvider
         $this->app->singleton(FilamentPasskeysPlugin::class);
 
         $this->app->bind(PasskeyLoginResponse::class, FilamentPasskeyLoginResponse::class);
+        $this->app->bind(PasskeyRegistrationResponse::class, FilamentPasskeyRegistrationResponse::class);
     }
 
     public function boot(): void
