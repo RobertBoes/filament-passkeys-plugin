@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertBoes\FilamentPasskeys\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -17,8 +19,9 @@ class ConfirmPasswordController extends Controller
         ]);
 
         $user = $request->user();
+        $password = $request->string('password')->toString();
 
-        if (! $user || ! Hash::check($request->input('password'), $user->getAuthPassword())) {
+        if (! $user || ! Hash::check($password, $user->getAuthPassword())) {
             throw ValidationException::withMessages([
                 'password' => __('filament-passkeys::passkeys.password_confirm.invalid'),
             ]);

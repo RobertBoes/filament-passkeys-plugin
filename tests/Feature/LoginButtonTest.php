@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Filament\Auth\Pages\Login;
 use Livewire\Mechanisms\HandleComponents\HandleComponents;
 use RobertBoes\FilamentPasskeys\FilamentPasskeysPlugin;

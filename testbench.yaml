@@ -1,0 +1,2 @@
+providers:
+    - RobertBoes\FilamentPasskeys\FilamentPasskeysServiceProvider

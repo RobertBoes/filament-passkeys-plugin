@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertBoes\FilamentPasskeys\Http\Responses;
 
 use Filament\Facades\Filament;
@@ -10,7 +12,7 @@ class FilamentPasskeyLoginResponse implements PasskeyLoginResponseContract
 {
     public function toResponse($request): JsonResponse
     {
-        $panel = Filament::getCurrentPanel() ?? Filament::getDefaultPanel();
+        $panel = Filament::getCurrentOrDefaultPanel();
 
         return new JsonResponse([
             'redirect' => $panel?->getUrl() ?? config('app.url'),

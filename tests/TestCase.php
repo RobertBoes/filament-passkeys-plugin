@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertBoes\FilamentPasskeys\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -16,6 +18,7 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RobertBoes\FilamentPasskeys\FilamentPasskeysServiceProvider;
+use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -23,6 +26,7 @@ abstract class TestCase extends Orchestra
     {
         return [
             ActionsServiceProvider::class,
+            BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,
             FilamentServiceProvider::class,
@@ -35,6 +39,7 @@ abstract class TestCase extends Orchestra
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             FilamentPasskeysServiceProvider::class,
+            TestPanelProvider::class,
         ];
     }
 }
