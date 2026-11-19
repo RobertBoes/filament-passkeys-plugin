@@ -158,15 +158,26 @@ class FilamentPasskeysPlugin implements Plugin
     public function getLoginButtonLabel(): string
     {
         return $this->loginButtonLabel
-            ?: Config::string('filament-passkeys.login_button_label', '')
-            ?: __('filament-passkeys::passkeys.login.button');
+            ?? static::nullableConfigString('filament-passkeys.login_button_label')
+            ?? __('filament-passkeys::passkeys.login.button');
     }
 
     public function getUserMenuItemLabel(): string
     {
         return $this->userMenuItemLabel
-            ?: Config::string('filament-passkeys.user_menu_item_label', '')
-            ?: __('filament-passkeys::passkeys.menu.label');
+            ?? static::nullableConfigString('filament-passkeys.user_menu_item_label')
+            ?? __('filament-passkeys::passkeys.menu.label');
+    }
+
+    /**
+     * Null means "not set" and lets the caller fall back; any other non-string
+     * value is a misconfiguration and throws.
+     */
+    protected static function nullableConfigString(string $key): ?string
+    {
+        return Config::get($key) === null
+            ? null
+            : Config::string($key);
     }
 
     public function register(Panel $panel): void
