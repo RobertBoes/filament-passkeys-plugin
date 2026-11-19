@@ -4,6 +4,7 @@ import {
     UserCancelledError,
     NotSupportedError,
     InvalidDomainError,
+    UnexpectedResponseError,
 } from '@laravel/passkeys';
 
 export default function filamentPasskeysManager({
@@ -161,6 +162,9 @@ export default function filamentPasskeysManager({
                     id: result?.id,
                     name: result?.name ?? this.name,
                     addedLabel: this.labels.addedJustNow,
+                    authenticator: result?.authenticator ?? null,
+                    iconLight: result?.iconLight ?? null,
+                    iconDark: result?.iconDark ?? null,
                 });
                 this.success = this.labels.added;
                 this.name = '';
@@ -178,6 +182,12 @@ export default function filamentPasskeysManager({
                 }
                 if (e instanceof InvalidDomainError) {
                     this.error = this.labels.invalidDomain;
+                    return;
+                }
+                // Its message names the redirect URL, which means nothing to
+                // the user.
+                if (e instanceof UnexpectedResponseError) {
+                    this.error = this.labels.failure;
                     return;
                 }
                 this.error = e?.message ?? this.labels.failure;
