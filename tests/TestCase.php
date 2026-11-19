@@ -24,13 +24,12 @@ abstract class TestCase extends Orchestra
 {
     protected function getPackageProviders($app): array
     {
-        $providers = [
+        return [
             ActionsServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,
             FilamentServiceProvider::class,
-            FilamentPasskeysServiceProvider::class,
             FormsServiceProvider::class,
             InfolistsServiceProvider::class,
             LivewireServiceProvider::class,
@@ -39,11 +38,8 @@ abstract class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
+            FilamentPasskeysServiceProvider::class,
             TestPanelProvider::class,
         ];
-
-        sort($providers);
-
-        return $providers;
     }
 }
