@@ -8,9 +8,9 @@ A Filament v5 plugin that hooks [`laravel/passkeys`](https://github.com/laravel/
 ## Requirements
 
 - PHP 8.3+
-- Laravel 11, 12, or 13
+- Laravel 12 or 13
 - Filament v5
-- `laravel/passkeys` ^0.2
+- `laravel/passkeys` ^0.3
 
 ## Installation
 
